@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import "dart:convert";
+
 Map<String, dynamic> data = {
   'users': [
     {
@@ -18,3 +21,28 @@ Map<String, dynamic> data = {
     }
   ],
 };
+
+
+class APIService {
+  static final Dio _dio = Dio();
+
+  static Future<dynamic> get(String url) async {
+    final response = await _dio.get(url);
+
+    if(response.statusCode == 200) {
+      return json.decode(response.data);
+    } else {
+      print("gen erè");
+    }
+  }
+
+  static Future<dynamic> post(String url, dynamic data) async {
+    final response = await _dio.post(url, data: data);
+    if(response.statusCode == 200) {
+      return json.decode(response.data);
+    } else {
+      print("gen erè");
+    }
+    
+  }
+}
